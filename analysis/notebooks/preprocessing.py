@@ -47,7 +47,7 @@ def format_df(df):
     df.index = df['pmid'].astype(str) + '_' + df['sent_index'].astype(str)
 
     return df
-    
+
 
 def engineer_features(df):
     out = df.copy()
@@ -88,29 +88,6 @@ def _get_tfidf_model(
     tfidf_doc = tfidf_transformer.fit_transform(docs)
     feature_names = tfidf_transformer.get_feature_names() # list, # scipy.sparse.csr.csr_matrix
     return feature_names, tfidf_doc
-
-
-def print_row(row):
-    ncols = row.shape[0]
-    lists = [row[i] for i in range(ncols)]
-
-    ### check input data
-    list_lengths = [len(l) for l in lists]
-    assert len(set(list_lengths))==1, "Lists are of different lengths"
-    
-    ### print header
-    for j in range(ncols):
-        item = row.index[j]
-        print(f'{item:<20}', end='')
-    print('\n', end='')
-    print('-'*20*ncols)
-        
-    ### print contents
-    for obj in zip(*lists):
-        for j in range(ncols):
-            item = str(obj[j])
-            print(f'{item:<20}', end='')
-        print('\n', end='')
 
 
 def apply_spacy(docs: pd.Series, parser):
