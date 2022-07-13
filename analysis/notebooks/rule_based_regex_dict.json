@@ -1,0 +1,39 @@
+{
+    "OBJECTIVE": [
+        "^To ",
+        "purpose|aim|objective",
+        "aimed to|was conducted to|were conducted to"
+    ],
+    "METHODS": [
+        "(randomized|randomised|randomization|randomisation)",
+        "(single-blinded|double-blinded|single-blind|double-blind|patient-blinded)",
+        "(primary|secondary) (outcome|outcomes)",
+        "recruited|enrolled",
+        "administered",
+        "(was|were) (assigned|masked|randomized|randomised|analysed|analyzed|used to|followed-up|followed up|randomly|provided|given|treated|performed|carried out)",
+        "(subjects|participants) received",
+        "underwent",
+        "statistically significant",
+        "prospective",
+        "cross-over|crossover",
+        "case-control",
+        "consent|consented|reconsented"
+    ],
+    "RESULTS": [
+        " P = | P < | P > ",
+        "confidence interval",
+        "95 % CI",
+        "(odds ratio|hazard ratio)",
+        "(no|without) significant"
+    ],
+    "CONCLUSIONS": [
+        "findings",
+        "(indicate|indicates|indicating) that ",
+        "(suggest|suggests|suggesting) that",
+        "(do|does) not support",
+        "(confirm|confirms|confirming) that",
+        "(support|supports|supporting) that",
+        "clinicaltrials.gov",
+        "NCT\\d+"
+    ]
+}
