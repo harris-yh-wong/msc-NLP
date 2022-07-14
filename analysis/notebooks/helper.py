@@ -40,12 +40,12 @@ def compare_cleaned(df, max_row=20):
 
 def preview(df, max_row=3, show_cols=('txt', ), header_cols=('index', 'label')):
     ncols = df.shape[0]
-    if ncols >= max_row:
+    if ncols > max_row:
         print(f"max_row exceeded. Only showing {max_row} out of {ncols} rows.\n")
         df2 = df.head(max_row)
     else:
         df2 = df.copy()
-        print('Showing {ncols} rows.\n')
+        print(f'Showing all {ncols} rows.\n')
         
     df2 = df2.reset_index(inplace=False)
 
