@@ -18,5 +18,9 @@
     "flag_floats": {
         "regex": "[+-]?(?=\\d*[.eE])([0-9]+\\.?[0-9]*|\\.[0-9]+)([eE][+-]?[0-9]+)?",
         "replace_to": "@FLOAT"
+    },
+    "flag_dates": {
+        "regex": "(\\d{1,2})\\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\\s+(\\d{4})",
+        "replace_to": "@DATE"
     }
 }
