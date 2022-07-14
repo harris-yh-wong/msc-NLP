@@ -2,7 +2,7 @@ import re
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-
+import requests
 
 def process_source_files(input_dir, output_dir):
     
@@ -156,3 +156,36 @@ def flag_trial_registration(docs: pd.Series):
     ### format
     flag_output = flag_output.rename("flag_registration")
     return flag_output
+
+
+def get_us2uk_dict():
+    url ="https://raw.githubusercontent.com/hyperreality/American-British-English-Translator/master/data/american_spellings.json"
+    us2uk_dict = requests.get(url).json()
+
+    us2uk_dict_additions = {
+        'randomization': 'randomisation'
+    }
+    
+    us2uk_dict = {**us2uk_dict, **us2uk_dict_additions}
+    return us2uk_dict
+
+
+def americanise(doc: str, from_to_dict: dict):
+    """Replace British spelling in a document into US spelling.
+
+    Args:
+        doc (str): Document.
+        us2uk_dict (dict): Dictionary where keys=US spelling, values=UK spelling
+
+    Returns:
+        americanised_doc: Document with US spelling
+    """
+    for key, value in from_to_dict.items():
+        ### noted replacement errors:
+        ### e.g. 'discount' -> 'diskount' instead of 'discount'
+        ### americanised_doc = re.sub(f'(?<![a-zA-Z]){uk}(?![a-z-Z])', us, doc)
+        ## (1) too slow
+        ## (2) cannot handle plurals e.g. 'discs'    -> 'discs'    instead of 'disks'
+        americanised_doc = doc.replace(value, key)
+    return americanised_doc
+
