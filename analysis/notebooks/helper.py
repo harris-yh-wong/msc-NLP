@@ -37,3 +37,30 @@ def compare_cleaned(df, max_row=20):
         print(row['clean'])
         print('\n', end='')
 
+
+def preview(df, max_row=3, show_cols=('txt', ), header_cols=('index', 'label')):
+    ncols = df.shape[0]
+    if ncols >= max_row:
+        print(f"max_row exceeded. Only showing {max_row} out of {ncols} rows.\n")
+        df2 = df.head(max_row)
+    else:
+        df2 = df.copy()
+        print('Showing {ncols} rows.\n')
+        
+    df2 = df2.reset_index(inplace=False)
+
+    header_cols = [col for col in header_cols if col in df2.columns]
+
+    for i in range(df2.shape[0]):
+        row = df2.iloc[i]
+        ### header
+        for col in header_cols:
+            print(' | ', end='')
+            print(row[col], end='')
+        print('\n', end='')
+
+        ### contents
+        for col in show_cols:
+            print(row[col], end='\n')
+        
+        print('\n', end='')
