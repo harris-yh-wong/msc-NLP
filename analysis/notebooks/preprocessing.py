@@ -98,4 +98,61 @@ def apply_spacy(docs: pd.Series, parser):
     d['pos']   = d['spacynlp'].apply(get_spacy_pos)
     output_df = pd.DataFrame(d, index=docs.index)
     return output_df
+
+
+def get_registries_regexes(f=None):
+    """Extract registries and regexes information from the `ctregistries` github repo
+    """
+    if f is None:
+        ### import registries information (containing databank name, identifier regex, etc)
+        f = "https://raw.githubusercontent.com/maia-sh/ctregistries/master/inst/extdata/registries.csv"
+    registries_df = pd.read_csv(f).query('databank_type == "registry"')
+
+    ### skip EudraCT for now
+    # regex does not work for this particular registry
+    # suspected reason: R vs Python regex difference
+    registries_regexes = registries_df[['databank', 'trn_regex']].query('databank != "EudraCT"')
+    return registries_regexes
+
+
+def flag_trial_identifier(docs: pd.Series, registries_regexes=None):
+    ### import a dataframe with two columns:
+    ### (i) databank name
+    ### (ii) regex for identifier from this registry
+    if registries_regexes is None:
+        registries_regexes = get_registries_regexes()
+
+    ### generate flags for each databank 
+    ### save into a dictionary
+    ### then combine to dataframe
+    flags = dict()
+    for databank, regex in zip(registries_regexes['databank'], registries_regexes['trn_regex']):
+        flag = docs.str.contains(regex)
+        flags[databank] = flag
+    flags_trial_identifier_per_databank = pd.DataFrame(flags)
+
+    ### search for the 'clinicaltrials.gov' string
+    flag_clinical_trials_dot_gov = docs.str.contains(r"clinicaltrials.gov")
+
+    ### combine
+    flag_output = flags_trial_identifier_per_databank.any(axis=1) | flag_clinical_trials_dot_gov
+
+    ### formatting
+    flag_output = flag_output.rename("flag_any_trial_identifier")
+    return flag_output
+
+
+def flag_trial_registration(docs: pd.Series):    
+    #### search for (i) date and (ii) contains the 'registry' keyword or synonyms
+    date_regex = r"(\d{1,2})\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{4})"
+    # search for dates in the format of '01 Jan 1970'
+    flag_date = docs.str.contains(date_regex)
+    flag_registration_keyword = docs.str.contains(r"registration|registry|registered")
+    #! does not contain the word register
     
+    ### intersection
+    flag_output = flag_date & flag_registration_keyword
+    
+    ### format
+    flag_output = flag_output.rename("flag_registration")
+    return flag_output
