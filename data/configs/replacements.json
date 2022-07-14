@@ -1,0 +1,22 @@
+{
+    "connected_hyphen": {
+        "regex": "(?<=[0-9])-(?=[0-9])",
+        "replace_to": " - "
+    },
+    "truncated_floats": {
+        "regex": "(?<=[0-9]) \\.(?=[0-9])",
+        "replace_to": "."
+    },
+    "num_comma_separator": {
+        "regex": "(?<=[0-9]) ,(?=[0-9])",
+        "replace_to": ""
+    },
+    "flag_integers": {
+        "regex": "(?<![\\d.])[0-9]+(?![\\d.])",
+        "replace_to": "@INTEGER"
+    },
+    "flag_floats": {
+        "regex": "[+-]?(?=\\d*[.eE])([0-9]+\\.?[0-9]*|\\.[0-9]+)([eE][+-]?[0-9]+)?",
+        "replace_to": "@FLOAT"
+    }
+}
