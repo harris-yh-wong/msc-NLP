@@ -22,5 +22,9 @@
     "flag_dates": {
         "regex": "(\\d{1,2})\\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\\s+(\\d{4})",
         "replace_to": "@DATE"
+    },
+    "flag_any_number": {
+        "regex": "@INTEGER|@FLOAT",
+        "replace_to": "@NUMBER"
     }
 }
