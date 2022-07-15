@@ -16,7 +16,7 @@
     },
     "flag_integers": {
         "regex": "(?<![\\d.])[0-9]+(?![\\d.])",
-        "replace_to": "@"
+        "replace_to": "@@@"
     },
     "flag_floats": {
         "regex": "[+-]?(?=\\d*[.eE])([0-9]+\\.?[0-9]*|\\.[0-9]+)([eE][+-]?[0-9]+)?",
@@ -24,10 +24,10 @@
     },
     "flag_dates": {
         "regex": "(\\d{1,2})\\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\\s+(\\d{4})",
-        "replace_to": "@@@@"
+        "replace_to": "@@@@@"
     },
     "flag_any_number": {
-        "regex": "@|@@",
-        "replace_to": "@@@"
+        "regex": "@@|@@@",
+        "replace_to": "@"
     }
 }
