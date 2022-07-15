@@ -27,7 +27,7 @@
         "replace_to": "@@@@"
     },
     "flag_any_number": {
-        "regex": "@INTEGER|@FLOAT",
+        "regex": "@|@@",
         "replace_to": "@@@"
     }
 }
